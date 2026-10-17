@@ -39,3 +39,12 @@
    {:month 4 :day 2 :human 3.7 :critter 3.6}])
 
 (map (fn [[_ v]] (count v)) (group-by (juxt :month :day) food-journal))
+
+(defn my-comp [& fs]
+  (let [fs (reverse fs)]
+    (fn [& args]
+        (reduce (fn [x f] (f x))
+                (apply (first fs) args)
+                (rest fs)))))
+
+((my-comp int inc #(/ % 2) :intr :attr) {:attr {:intr 10}})

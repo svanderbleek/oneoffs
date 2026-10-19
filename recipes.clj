@@ -40,11 +40,13 @@
    (all-ways (first recipes) (rest recipes) pantry []))
   ([recipe recipes pantry used]
    (if-not recipe
-     (if (empty? used)
-       nil
-       [used])
-     (concat (when-let [used-pantry (use-ingredients pantry recipe)]
-               (all-ways recipe recipes used-pantry (into used recipe)))
-             (all-ways (first recipes) (rest recipes) pantry used)))))
+     (when-not (empty? used) [used])
+     (if-let [used-pantry (use-ingredients pantry recipe)]
+       (concat (all-ways recipe recipes used-pantry (into used recipe))
+               (all-ways (first recipes) (rest recipes) pantry used))
+       (all-ways (first recipes) (rest recipes) pantry used)))))
 
-(count (all-ways recipes-list pantry-start)) ;; 431
+(all-ways {:b {:flour 1} :c {:flour 1 :sugar 1}} {:flour 2 :sugar 2})
+(count (all-ways recipes-list pantry-start))
+
+(concat nil nil)

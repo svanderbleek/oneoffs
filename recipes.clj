@@ -1,6 +1,5 @@
 (ns recipes)
 
-
 (def recipes-all
   "A map of recipe name -> ingredients needed to make the recipe.
   Note that ingredients are normalized as integer values.
@@ -58,7 +57,6 @@
 
 (defn children [pantry recipes]
   (keep #(use-ingredients-g pantry %) recipes))
-
 
 (defn all-ways-g [recipes pantry]
   (loop [queue (conj clojure.lang.PersistentQueue/EMPTY [[] pantry])

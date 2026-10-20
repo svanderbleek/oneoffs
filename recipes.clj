@@ -35,18 +35,13 @@
       used-pantry
       nil)))
 
-(defn all-ways
+(defn all-ways-r
   ([recipes pantry]
-   (all-ways (first recipes) (rest recipes) pantry []))
+   (all-ways-r (first recipes) (rest recipes) pantry []))
   ([recipe recipes pantry used]
    (if-not recipe
-     (when-not (empty? used) [used])
+     (when-not (some #(use-ingredients pantry %) recipes-list) [used])
      (if-let [used-pantry (use-ingredients pantry recipe)]
-       (concat (all-ways recipe recipes used-pantry (into used recipe))
-               (all-ways (first recipes) (rest recipes) pantry used))
-       (all-ways (first recipes) (rest recipes) pantry used)))))
-
-(all-ways {:b {:flour 1} :c {:flour 1 :sugar 1}} {:flour 2 :sugar 2})
-(count (all-ways recipes-list pantry-start))
-
-(concat nil nil)
+       (concat (all-ways-r recipe recipes used-pantry (into used recipe))
+               (all-ways-r (first recipes) (rest recipes) pantry used))
+       (all-ways-r (first recipes) (rest recipes) pantry used)))))

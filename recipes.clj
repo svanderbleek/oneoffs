@@ -41,7 +41,8 @@
   ([recipe recipes pantry used]
    (if-not recipe
      (when-not (some #(use-ingredients pantry %) recipes-list) [used])
-     (if-let [used-pantry (use-ingredients pantry recipe)]
-       (concat (all-ways-r recipe recipes used-pantry (into used recipe))
-               (all-ways-r (first recipes) (rest recipes) pantry used))
-       (all-ways-r (first recipes) (rest recipes) pantry used)))))
+     (concat (when-let [used-pantry (use-ingredients pantry recipe)]
+               (all-ways-r recipe recipes used-pantry (into used recipe)))
+             (all-ways-r (first recipes) (rest recipes) pantry used)))))
+
+(count (all-ways-r recipes-list pantry-start))

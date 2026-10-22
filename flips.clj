@@ -22,3 +22,11 @@
 
 (defn rotate [image]
   (mapv (fn [col] (vec (reverse col))) (cols->rows image)))
+
+(count (flatten (list (repeat 9 0) 1 (repeat (- 10 9 1) 0))))
+
+(defn square [n]
+  (vec (for [i (range n)]
+         (vec (flatten (list (repeat i 0) 1 (repeat (- n i 1) 0)))))))
+
+(clojure.pprint/pprint (square 10))

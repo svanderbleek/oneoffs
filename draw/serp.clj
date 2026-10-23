@@ -28,7 +28,6 @@
   (q/stroke 0)
   (serp [200 0] [0 400] [400 400]))
 
-;; can't translate algorithm from racket :(
 (q/defsketch serpinski
   :size [400 400]
   :draw draw)
